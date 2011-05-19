@@ -1,5 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
+/**
+ * Beautiful Default Template
+ *
+ * @package     Beautiful
+ * @subpackage  Beautiful View
+ * @category    Template
+ * @author      Luke Morton
+ * @copyright   Luke Morton, 2011
+ * @license     MIT
+ */
 class Template_Default extends Template {
 
 	/**

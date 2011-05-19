@@ -1,8 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Template abstract.
+ * Beautiful Template
  *
- * @author  Luke Morton
+ * @package     Beautiful
+ * @subpackage  Beautiful View
+ * @category    Template
+ * @author      Luke Morton
+ * @copyright   Luke Morton, 2011
+ * @license     MIT
  */
 abstract class Beautiful_Template {
 
@@ -22,8 +27,8 @@ abstract class Beautiful_Template {
 
 	/**
 	 * Template file path
-     *
-     * @protected
+	 *
+	 * @protected
 	 */
 	protected $_path = NULL;
 	

@@ -45,7 +45,20 @@ echo new View(new View_Blog_Path);
 // Using mustache
 $view = new View(new View_Blog_Path);
 echo $view->render(new Template_Mustache);
+
+// Short mustache
+echo new View(new Template_Mustache, new View_Blog_Path);
 ```
 
-To be continued...
+## Author
+
+Luke Morton
+
+## License
+
+MIT
+
+## Contributing
+
+Forking fork it and send me a pull request.
 
