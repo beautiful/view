@@ -32,8 +32,25 @@ class Beautiful_View {
 	 */
 	public function __construct($template = NULL, $view_model = NULL)
 	{
-		$this->set_template($template);
-		$this->set_model($view_model);
+		if (is_string($template))
+		{
+			$this->set_filename($template);
+		}
+		else if ($template instanceof Template)
+		{
+			$this->set_template($template);
+		}
+		else if ($template instanceof ViewModel)
+		{
+			// ViewModel was passed in as first param
+			// this is allowed
+			$this->set_model($template);
+		}
+		
+		if (isset($view_model))
+		{
+			$this->set_model($view_model);
+		}
 	}
 	
 	/**
@@ -42,15 +59,7 @@ class Beautiful_View {
 	 */
 	public function set_template($template)
 	{
-		if ((is_string($template) && strpos($template, '_') === FALSE) || strpos($template, '/') !== FALSE)
-		{
-			$this->set_filename($template);
-		}
-		else
-		{
-			$this->_template = $template;
-		}
-		
+		$this->_template = $template;
 		return $this;
 	}
 	
@@ -65,22 +74,13 @@ class Beautiful_View {
 		}
 		else if ($this->_template === NULL)
 		{
+			// Use default Template
 			$this->_template = new Template_Default;
-		}
-		else if (is_string($this->_template))
-		{
-			$model = "Template_{$this->_template}";
-			$this->_template = new $template;
-		}
-		else if (is_callable($this->_template))
-		{
-			$this->_template = call_user_func($this->_template);
 		}
 		else
 		{
-			throw new Kohana_Exception('ViewModel passed was'.
-				' not a string reference, callback or an'.
-				' instance of ViewModel');
+			throw new Kohana_Exception('Template passed was'.
+				' not an instance of Template.');
 		}
 		
 		return $this->_template;
@@ -118,20 +118,10 @@ class Beautiful_View {
 		{
 			$this->_model = new ViewModel;
 		}
-		else if (is_string($this->_model))
-		{
-			$model = "View_{$this->_model}";
-			$this->_model = new $model;
-		}
-		else if (is_callable($this->_model))
-		{
-			$this->_model = call_user_func($this->_model);
-		}
 		else
 		{
 			throw new Kohana_Exception('ViewModel passed was'.
-				' not a string reference, callback or an'.
-				' instance of ViewModel');
+				' not an instance of ViewModel');
 		}
 		
 		return $this->_model;
