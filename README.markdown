@@ -40,14 +40,20 @@ The aim of this module is to extend the expected behaviour of
 flexibility to use `ViewModel`s and `Template`s when you want.
 
 ```php
-echo new View(new View_Blog_Path);
+echo new View(new View_Blog_Post);
 
 // Using mustache
-$view = new View(new View_Blog_Path);
+$view = new View(new View_Blog_Post);
 echo $view->render(new Template_Mustache);
 
 // Short mustache
-echo new View(new Template_Mustache, new View_Blog_Path);
+echo new View(new Template_Mustache, new View_Blog_Post);
+
+// Specific template filename
+echo new View(new Template_Mustache('blog/post/alt'), new View_Blog_Post);
+
+// Using default template renderer
+echo new View('blog/post/alt', new View_Blog_Post);
 ```
 
 ## Author
