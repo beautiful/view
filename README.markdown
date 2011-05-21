@@ -42,18 +42,23 @@ flexibility to use `ViewModel`s and `Template`s when you want.
 ```php
 echo new View(new View_Blog_Post);
 
-// Using mustache
-$view = new View(new View_Blog_Post);
-echo $view->render(new Template_Mustache);
-
-// Short mustache
+// Mustache
 echo new View(new Template_Mustache, new View_Blog_Post);
 
 // Specific template filename
 echo new View(new Template_Mustache('blog/post/alt'), new View_Blog_Post);
 
-// Using default template renderer
+// Using default template renderer with custom filename
 echo new View('blog/post/alt', new View_Blog_Post);
+
+// Using multiple templates with one ViewModel
+// Using mustache
+$view = new View(new View_Blog_Post);
+echo $view->render(new Template_Mustache);
+echo $view->render(new Template_Mustache('blog/post/alt'));
+echo $view->render(new Template_Default);
+echo $view->render(new Template_Json); // Template_Json not included
+
 ```
 
 ## Author
@@ -67,4 +72,3 @@ MIT
 ## Contributing
 
 Forking fork it and send me a pull request.
-
