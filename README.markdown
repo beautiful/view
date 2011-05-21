@@ -65,8 +65,48 @@ $view = new View(new Template_Mustache('page'));
 echo $view->render(NULL, new View_Home);
 echo $view->render(NULL, new View_About);
 echo $view->render(NULL, new View_Contact);
-
 ```
+
+## Decisions you should be aware of
+
+In order to keep the old `Kohana_View` API (atleast for now) I
+decided to allow `Beautiful_View::__construct()` and 
+`Beautiful_View::factory()` to be more flexible in their parameters.
+
+For example both these methods allow the following:
+
+``` php
+new View('path/to/template');
+new View('path/to/template', array('variable' => 'value'));
+```
+
+This is the existing signature of `Kohana_View`. However
+`Beautiful_View` also adds in these extras:
+
+
+``` php
+new View(new Template_Default('path/to/template'));
+new View(new Template_Default('path/to/template'), array('variable' => 'value'));
+new View(new Template_Default('path/to/template'), new View_Page);
+new View('path/to/template', new View_Page);
+```
+
+The following was also allowed but I'm not sure it should be.. what
+do you think?
+
+``` php
+new View(new View_Page);
+```
+
+The above is a shortcut to:
+
+``` php
+new View(NULL, new View_Page);
+```
+
+The `View::render()` method however has a stricter policy when it
+comes down to parameters. They are type-hinted and therefore the
+first parameter must be of `Template`, the second of `ViewModel`.
 
 ## Author
 
