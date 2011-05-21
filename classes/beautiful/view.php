@@ -29,10 +29,22 @@ class Beautiful_View {
 	protected $_template;
 	
 	/**
+	 * @var     string     Default Template Class
+	 * @access  protected
+	 */
+	protected $_default_template = 'Template_Default';
+	
+	/**
 	 * @var     Beautiful_ViewModel
 	 * @access  protected
 	 */
 	protected $_model;
+	
+	/**
+	 * @var     string     Default ViewModel Class
+	 * @access  protected
+	 */
+	protected $_default_model = 'ViewModel';
 
 	/**
 	 * @param   mixed  
@@ -84,7 +96,7 @@ class Beautiful_View {
 		else if ($this->_template === NULL)
 		{
 			// Use default Template
-			$this->_template = new Template_Default;
+			$this->_template = new $this->_default_template;
 		}
 		else
 		{
@@ -125,7 +137,7 @@ class Beautiful_View {
 		}
 		else if ($this->_model === NULL)
 		{
-			$this->_model = new ViewModel;
+			$this->_model = new $this->_default_model;
 		}
 		else
 		{
