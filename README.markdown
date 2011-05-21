@@ -8,7 +8,7 @@ Kohana ships with it's own view functionality in it's class
 `Kohana_View` which supports PHP templates and allows data to be
 passed into these templates using arrays. For example:
 
-```php
+``` php
 echo View::factory('path/to/view', array(
 	'page_title' => 'A simple example',
 ));
@@ -39,7 +39,7 @@ The aim of this module is to extend the expected behaviour of
 `Kohana_View`. Not to break away from existing API, but to allow the
 flexibility to use `ViewModel`s and `Template`s when you want.
 
-```php
+``` php
 echo new View(new View_Blog_Post);
 
 // Mustache
