@@ -35,9 +35,8 @@ class Template_Mustache extends Template {
 	 */
 	public function render(ViewModel $view)
 	{
-		
-		$template = file_get_contents($this->get_filename());
-		return $this->_stash($template, $view, $view->_partials)->render();
+		$template = file_get_contents($this->get_filename($view));
+		return $this->_stash($template, $view)->render();
 	}
 	
 	/**
@@ -48,7 +47,7 @@ class Template_Mustache extends Template {
 	 * @param   array     partial templates
 	 * @return  Mustache
 	 */
-	protected function _stash($template, ViewModel $view, array $partials)
+	protected function _stash($template, ViewModel $view, array $partials = NULL)
 	{
 		return new Kohana_Mustache($template, $view, $partials, array(
 			'charset' => Kohana::$charset,
