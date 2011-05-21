@@ -49,7 +49,7 @@ class Template_Mustache extends Template {
 	 */
 	protected function _stash($template, ViewModel $view, array $partials = NULL)
 	{
-		return new Kohana_Mustache($template, $view, $partials, array(
+		return new Beautiful_Mustache($template, $view, $partials, array(
 			'charset' => Kohana::$charset,
 		));
 	}
