@@ -287,23 +287,20 @@ class Beautiful_View {
 	 *
 	 *     $output = $view->render();
 	 *
-	 * @param    string  view filename
+	 * @param    Template
+	 * @param    ViewModel
 	 * @return   string
 	 */
-	public function render($template = NULL, $view_model = NULL)
+	public function render(Template $template = NULL, ViewModel $view_model = NULL)
 	{
+		if ($template)
+		{
+			$this->set_template($template);
+		}
+		
 		if ($view_model)
 		{
 			$this->set_model($view_model);
-			
-			if ($template === NULL)
-			{
-				$this->set_filename();
-			}
-		}
-		else if ($template)
-		{
-			$this->set_filename($template);
 		}
 		
 		return $this->get_template()
