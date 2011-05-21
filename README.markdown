@@ -8,7 +8,7 @@ Kohana ships with it's own view functionality in it's class
 `Kohana_View` which supports PHP templates and allows data to be
 passed into these templates using arrays. For example:
 
-```php
+``` php
 echo View::factory('path/to/view', array(
 	'page_title' => 'A simple example',
 ));
@@ -39,25 +39,32 @@ The aim of this module is to extend the expected behaviour of
 `Kohana_View`. Not to break away from existing API, but to allow the
 flexibility to use `ViewModel`s and `Template`s when you want.
 
-```php
+``` php
 echo new View(new View_Blog_Post);
 
 // Mustache
 echo new View(new Template_Mustache, new View_Blog_Post);
 
-// Specific template filename
+// Specific template filename with mustache
 echo new View(new Template_Mustache('blog/post/alt'), new View_Blog_Post);
 
-// Using default template renderer with custom filename
+// Using custom template filename with default
 echo new View('blog/post/alt', new View_Blog_Post);
 
 // Using multiple templates with one ViewModel
-// Using mustache
 $view = new View(new View_Blog_Post);
+
 echo $view->render(new Template_Mustache);
 echo $view->render(new Template_Mustache('blog/post/alt'));
 echo $view->render(new Template_Default);
 echo $view->render(new Template_Json); // Template_Json not included
+
+// One template with multiple ViewModels
+$view = new View(new Template_Mustache('page'));
+
+echo $view->render(NULL, new View_Home);
+echo $view->render(NULL, new View_About);
+echo $view->render(NULL, new View_Contact);
 
 ```
 
