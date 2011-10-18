@@ -10,6 +10,8 @@
  * @license     MIT
  */
 abstract class Beautiful_Template {
+	
+	public static $default_class = 'Template_PHP';
 
 	/**
 	 * Template extension

@@ -10,6 +10,8 @@
  * @license     MIT
  */
 class Beautiful_ViewModel {
+	
+	public static $default_class = 'ViewModel';
 
 	/**
 	 * Assigns a variable by name.
