@@ -35,7 +35,7 @@ class Template_Mustache extends Template {
 	 */
 	public function render(ViewModel $view)
 	{
-		$template = file_get_contents($this->get_filename($view));
+		$template = file_get_contents($this->path());
 		return $this->_stash($template, $view)->render();
 	}
 	
@@ -49,9 +49,11 @@ class Template_Mustache extends Template {
 	 */
 	protected function _stash($template, ViewModel $view, array $partials = NULL)
 	{
-		return new Beautiful_Mustache($template, $view, $partials, array(
-			'charset' => Kohana::$charset,
-		));
+		return new Beautiful_Mustache(
+			$template,
+			$view,
+			$partials,
+			array('charset' => Kohana::$charset));
 	}
 
 

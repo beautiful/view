@@ -35,7 +35,7 @@ class Template_JSON extends Template {
 	 */
 	public function render(ViewModel $view)
 	{
-		$template = file_get_contents($this->filename());
+		$template = file_get_contents($this->path());
 		$json = json_decode($template);
 		
 		foreach ($json as $_property => $_value)

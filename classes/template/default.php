@@ -21,7 +21,8 @@ class Template_Default extends Template {
 	protected $_extension = 'php';
 	
 	/**
-	 * Template directory
+	 * Template directory set to views for historic reasons. I prefer to use
+	 * a directory called "templates" as in [Template_Mustache].
 	 *
 	 * @access  protected
 	 */
@@ -78,7 +79,7 @@ class Template_Default extends Template {
 	 */
 	public function render(ViewModel $view)
 	{
-		return self::capture($this->get_filename($view), $view);
+		return self::capture($this->path(), $view);
 	}
 
 }

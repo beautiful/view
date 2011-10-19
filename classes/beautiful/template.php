@@ -11,6 +11,9 @@
  */
 abstract class Beautiful_Template {
 	
+	/**
+	 * Default Template class.
+	 */
 	public static $default_class = 'Template_PHP';
 
 	/**
@@ -23,7 +26,7 @@ abstract class Beautiful_Template {
 	/**
 	 * Template directory
 	 *
-	 * @access  protected
+	 * @protected
 	 */
 	protected $_dir = 'templates';
 
@@ -40,70 +43,42 @@ abstract class Beautiful_Template {
 	 * @param   string  Filename
 	 * @return  void
 	 */
-	public function __construct($filename = NULL)
+	public function __construct($path = NULL)
 	{
-		if (isset($filename))
+		if (isset($path))
 		{
-			$this->set_filename($filename);
+			$this->path($path);
 		}
-	}
-
-	/**
-	 * Set template location.
-	 *
-	 * @param   string
-	 * @return  $this
-	 */
-	public function set_filename($file)
-	{
-		if (($path = Kohana::find_file($this->_dir, $file, $this->_extension)) === FALSE)
-		{
-			throw new Kohana_View_Exception('The requested view :file could not be found', array(
-				':file' => $file,
-			));
-		}
-
-		// Store the file path locally
-		$this->_path = $path;
-
-		return $this;
 	}
 	
 	/**
-	 * Get template location.
+	 * Get/Set path to template file.
 	 *
 	 * @return  string
 	 */
-	public function get_filename(ViewModel $view = NULL)
+	public function path($path = NULL)
 	{
-		if (isset($view) && $this->_path === NULL)
+		if ($path === NULL)
 		{
-			$this->set_filename(
-				$this->_detect_filename_from_view($view)
-			);
+			if ($this->_path === NULL)
+			{
+				$path = Kohana::find_file($this->_dir, $path, $this->_extension);
+				
+				if ($path === FALSE)
+				{
+					throw new Kohana_View_Exception(
+						'The requested view :file could not be found',
+						array(':file' => $file));
+				}
+				
+				$this->_path = $path;
+			}
+			
+			return $this->_path;
 		}
 		
-		return $this->_path;
-	}
-	
-	/**
-	 * Detect the template name from the class name.
-	 *
-	 * @param   ViewModel
-	 * @return  string
-	 */
-	protected function _detect_filename_from_view(ViewModel $view)
-	{
-		// Start creating the template path from the class name
-		$template = explode('_', get_class($view));
-
-		// Remove "View" prefix
-		array_shift($template);
-
-		// Convert name parts into a path
-		$template = strtolower(implode('/', $template));
-
-		return $template;
+		$this->_path = $path;
+		return $this;
 	}
 
 	/**
