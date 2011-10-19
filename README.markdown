@@ -254,22 +254,25 @@ class Controller_Page extends Controller {
 
 > Oh wow, so you saved 17 extra characters... big deal!
 
-Well that is not all we have done my friend, check out the
-`View_Page` class now:
+Well that is not all we have done my friend, we also added
+a line to our bootstrap:
+
+```php
+<?php
+Template::$default_class = 'Template_Mustache';
+```
 
 ```php
 <?php
 class View_Page extends ViewModel {
 
-	protected $_template_class = 'Template_Mustache';
-
 	// ...
-	
+
 }
 ```
 
-It now extends `ViewModel` a component provided by
-Beautiful View and sets a protected property.
+We have set our default `Template` class to use `Mustache` and
+our `View_Page` now extends `ViewModel`.
 
 > Hmmm, interesting?! What does this mean for the template?
 
@@ -322,14 +325,8 @@ class Controller_Page extends Controller {
 ```
 
 If the first parameter is a string path then it will be
-encapsulated into a Template object. Which object is
-decided in the following order:
-
-1. If `ViewModel::$_template_class` is defined in your
-   `ViewModel` then it will be used.
-
-2. Else `Template::$default_class` will be used. This is
-   set to `Template_PHP` by default.
+encapsulated into a Template object.
+`Template::$default_class` will be used in this case.
    
 You can then override this setting when calling
 `View::render()` by passing a `Template` object as the
@@ -341,8 +338,8 @@ overridden when calling `View::render()`.
 
 As you can see in my example above if the request is AJAX
 `Template_Json` is used. Otherwise the `Template_Mustache`
-will be used due to `View_Page::$_template_class` being
-set.
+will be used due to `Template::$default_class` being set
+in our bootstrap.
 
 Have a look near the bottom of this README for my ideas on
 how Template_JSON works.
