@@ -11,7 +11,7 @@ knowledge by placing it in `ViewModel`s.
  - Provides various template solutions: PHP, Mustache, JSON.
  - Gives you ViewModel from MVVM
  - [Download](https://github.com/beautiful/view/zipball/master)
- - [Example](https://github.com/beautiful/example)
+ - [Example](https://github.com/beautiful/example) (Currently out of date)
  - [Author](http://lukemorton.co.uk)
 
 ## The long explanation
