@@ -11,6 +11,9 @@
  */
 class Beautiful_ViewModel {
 	
+	/**
+	 * Default ViewModel class.
+	 */
 	public static $default_class = 'ViewModel';
 
 	/**
