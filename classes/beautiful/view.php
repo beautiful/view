@@ -73,7 +73,7 @@ class Beautiful_View {
 			{
 				$this->viewmodel()->set($viewmodel);
 			}
-			else if ($template instanceof ViewModel)
+			else if ($viewmodel instanceof ViewModel)
 			{
 				$this->viewmodel($viewmodel);
 			}
