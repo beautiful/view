@@ -205,7 +205,7 @@ class Controller_Page extends Controller {
 	public function action_view()
 	{
 		$slug = $this->request->param('slug');
-		$view = View::factory('page', array('view' => new View_Page($slug)));
+		$view = new View('page', array('view' => new View_Page($slug)));
 		$this->response->body($view);
 	}
 
@@ -246,7 +246,7 @@ class Controller_Page extends Controller {
 	public function action_view()
 	{
 		$slug = $this->request->param('slug');
-		$view = View::factory('page', new View_Page($slug));
+		$view = new View('page', new View_Page($slug));
 		$this->response->body($view);
 	}
 }
@@ -317,7 +317,7 @@ class Controller_Page extends Controller {
 			$template = new Template_JSON($template);
 		}
 		
-		$view = View::factory($template, new View_Page($slug));
+		$view = new View($template, new View_Page($slug));
 		$this->response->body($view);
 	}
 	
