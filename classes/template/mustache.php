@@ -26,6 +26,13 @@ class Template_Mustache extends Template {
 	 * @access  protected
 	 */
 	protected $_dir = 'templates';
+	
+	/**
+	 * Partials.
+	 *
+	 * @access  protected
+	 */
+	protected $_partials = array();
 
 	/**
 	 * The rendering method, wooo!
@@ -40,19 +47,49 @@ class Template_Mustache extends Template {
 	}
 	
 	/**
+	 * Loads a new partial from a path. If the path is empty, the partial will
+	 * be removed.
+	 *
+	 * @param   string  partial name
+	 * @param   mixed   partial path, FALSE to remove the partial
+	 * @return  Kostache
+	 */
+	public function partial($name, $path)
+	{
+		if ( ! $path)
+		{
+			unset($this->_partials[$name]);
+		}
+		else
+		{
+			$path = Kohana::find_file($this->_dir, $path, $this->_extension);
+			
+			if ($path === FALSE)
+			{
+				throw new Kohana_View_Exception(
+					'The requested partial :path could not be found',
+					array(':path' => "{$this->_dir}/{$path}.{$this->_extension}"));
+			}
+			
+			$this->_partials[$name] = file_get_contents($path);
+		}
+
+		return $this;
+	}
+	
+	/**
 	 * Return a new Mustache for the given template, view, and partials.
 	 *
 	 * @param   string    template
 	 * @param   Kostache  view object
-	 * @param   array     partial templates
 	 * @return  Mustache
 	 */
-	protected function _stash($template, ViewModel $view, array $partials = NULL)
+	protected function _stash($template, ViewModel $view)
 	{
 		return new Beautiful_Mustache(
 			$template,
 			$view,
-			$partials,
+			$this->_partials,
 			array('charset' => Kohana::$charset));
 	}
 
