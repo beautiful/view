@@ -45,7 +45,7 @@ abstract class Beautiful_Template {
 	 */
 	public function __construct($path = NULL)
 	{
-		if (isset($path))
+		if ($path !== $path)
 		{
 			$this->path($path);
 		}
@@ -60,24 +60,19 @@ abstract class Beautiful_Template {
 	{
 		if ($path === NULL)
 		{
-			if ($this->_path === NULL)
-			{
-				$path = Kohana::find_file($this->_dir, $path, $this->_extension);
-				
-				if ($path === FALSE)
-				{
-					throw new Kohana_View_Exception(
-						'The requested view :file could not be found',
-						array(':file' => $file));
-				}
-				
-				$this->_path = $path;
-			}
-			
 			return $this->_path;
 		}
+
+		$final_path = Kohana::find_file($this->_dir, $path, $this->_extension);
 		
-		$this->_path = $path;
+		if ($final_path === FALSE)
+		{
+			throw new Kohana_View_Exception(
+				'The requested view :path could not be found',
+				array(':path' => "{$this->_dir}/{$path}.{$this->_extension}"));
+		}				
+		
+		$this->_path = $final_path;
 		return $this;
 	}
 
