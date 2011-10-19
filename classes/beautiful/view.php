@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Beautiful View
+ * Beautiful View.
  *
  * @package     Beautiful
  * @subpackage  Beautiful View
@@ -12,140 +12,125 @@
 class Beautiful_View {
 
 	/**
+	 * Factory method.
+	 *
 	 * @param   mixed  
 	 * @param   mixed  
 	 * @return  $this
 	 */
-	public static function factory($template = NULL, $view_model = NULL)
+	public static function factory($template = NULL, $viewmodel = NULL)
 	{
 		$class = get_called_class();
-		return new $class($template, $view_model);
+		return new $class($template, $viewmodel);
 	}
 
 	/**
-	 * @var     Beautiful_Template
+	 * @var     Template
 	 * @access  protected
 	 */
 	protected $_template;
 	
 	/**
-	 * @var     string     Default Template Class
+	 * @var     ViewModel
 	 * @access  protected
 	 */
-	protected $_default_template = 'Template_Default';
-	
-	/**
-	 * @var     Beautiful_ViewModel
-	 * @access  protected
-	 */
-	protected $_model;
-	
-	/**
-	 * @var     string     Default ViewModel Class
-	 * @access  protected
-	 */
-	protected $_default_model = 'ViewModel';
+	protected $_viewmodel;
 
 	/**
+	 * Sets [Template] and [ViewModel]. If a string is passed as $template
+	 * then it will be used a the path to the template and a Template
+	 * instance will be created using [Template::$default_class].
+	 *
+	 * If an array is passed as $viewmodel then [ViewModel::$default_class]
+	 * will be used to create a ViewModel instance and then the data will
+	 * be set on that object.
+	 *
 	 * @param   mixed  
 	 * @param   mixed  
 	 * @return  void
 	 */
-	public function __construct($template = NULL, $view_model = NULL)
+	public function __construct($template = NULL, $viewmodel = NULL)
 	{
-		if (is_string($template))
+		if ($template !== NULL)
 		{
-			$this->set_filename($template);
-		}
-		else if ($template instanceof Template)
-		{
-			$this->set_template($template);
-		}
-		else if ($template instanceof ViewModel)
-		{
-			// ViewModel was passed in as first param
-			// this is allowed
-			$this->set_model($template);
+			if (is_string($template))
+			{
+				$this->set_filename($template);
+			}
+			else if ($template instanceof Template)
+			{
+				$this->template($template);
+			}
+			else
+			{
+				throw new Kohana_Exception('Either a string path or Template instance should be passed into Beautiful_View::__construct()');
+			}
 		}
 		
-		if (isset($view_model))
+		if ($viewmodel !== NULL)
 		{
-			$this->set_model($view_model);
+			if (is_array($viewmodel))
+			{
+				$this->viewmodel()->set($viewmodel);
+			}
+			else if ($template instanceof ViewModel)
+			{
+				$this->viewmodel($viewmodel);
+			}
+			else
+			{
+				throw new Kohana_Exception('Either an array or ViewModel instance should be passed into Beautiful_View::__construct()');
+			}
 		}
 	}
 	
 	/**
-	 * @param   mixed  
+	 * Set/Get Template. If getting and no template is set then
+	 * we create an instance using [Template::$default_class].
+	 *
+	 * @param   Template  
 	 * @return  $this
 	 */
-	public function set_template($template)
+	public function template(Template $template = NULL)
 	{
+		if ($template === NULL)
+		{
+			if ($this->_template === NULL)
+			{
+				$class = Template::$default_class;
+				$this->_template = new $class;
+			}
+		
+			return $this->_template;
+		}
+		
 		$this->_template = $template;
 		return $this;
 	}
 	
 	/**
-	 * @return  Beautiful_Template
+	 * Get/Set [ViewModel]. If getting and no [ViewModel] set we then 
+	 * create an instance using [ViewModel::$default_class].
+	 *
+	 * @param   ViewModel
+	 * @return  ViewModel
 	 */
-	public function get_template()
+	public function viewmodel(ViewModel $viewmodel = NULL)
 	{
-		if ($this->_template instanceof Template)
+		if ($viewmodel === NULL)
 		{
-			// Already prepared
-		}
-		else if ($this->_template === NULL)
-		{
-			// Use default Template
-			$this->_template = new $this->_default_template;
-		}
-		else
-		{
-			throw new Kohana_Exception('Template passed was'.
-				' not an instance of Template.');
+			if ($this->_viewmodel === NULL)
+			{
+				$class = ViewModel::$default_class;
+				$this->_viewmodel = new $class;
+			}
+			
+			return $this->_viewmodel;
+		
 		}
 		
-		return $this->_template;
-	}
-	
-	/**
-	 * @param   mixed  
-	 * @return  $this
-	 */
-	public function set_model($view_model)
-	{
-		if (is_array($view_model))
-		{
-			$this->_model = new ViewModel;
-			$this->_model->set($view_model);
-		}
-		else
-		{
-			$this->_model = $view_model;
-		}
-		
+		$this->_viewmodel = $viewmodel;
 		return $this;
-	}
-	
-	/**
-	 * @return  Beautiful_ViewModel
-	 */
-	public function get_model()
-	{
-		if ($this->_model instanceof ViewModel)
-		{
-			// Already prepared
-		}
-		else if ($this->_model === NULL)
-		{
-			$this->_model = new $this->_default_model;
-		}
-		else
-		{
-			throw new Kohana_Exception('ViewModel passed was'.
-				' not an instance of ViewModel');
-		}
-		
-		return $this->_model;
 	}
 	
 	/**
@@ -162,9 +147,7 @@ class Beautiful_View {
 	 */
 	public function & __get($key)
 	{
-		return $this->get_model()
-			->get($key)
-			;
+		return $this->viewmodel()->get($key);
 	}
 
 	/**
@@ -193,7 +176,7 @@ class Beautiful_View {
 	 */
 	public function __isset($key)
 	{
-		$model = $this->get_model();
+		$model = $this->viewmodel();
 		return isset($model[$key]);
 	}
 
@@ -207,12 +190,12 @@ class Beautiful_View {
 	 */
 	public function __unset($key)
 	{
-		$model = $this->get_model();
+		$model = $this->viewmodel();
 		unset($model->{$key});
 	}
 	
 	/**
-	 * Magic method, returns the output of [View::render].
+	 * Magic method, returns the output of [View::render()].
 	 *
 	 * @return  string
 	 * @uses    View::render
@@ -242,9 +225,7 @@ class Beautiful_View {
 	 */
 	public function set_filename($file)
 	{
-		$this->get_template()
-			->set_filename($file)
-			;
+		$this->template()->path($file);
 		return $this;
 	}
 
@@ -266,9 +247,7 @@ class Beautiful_View {
 	 */
 	public function set($key, $value = NULL)
 	{
-		$this->get_model()
-			->set($key, $value)
-			;
+		$this->viewmodel()->bind($key, $value);
 		return $this;
 	}
 
@@ -287,36 +266,29 @@ class Beautiful_View {
 	 */
 	public function bind($key, & $value)
 	{
-		$this->get_model()
-			->bind($key, $value)
-			;
+		$this->viewmodel()->bind($key, $value);
 		return $this;
 	}
 
 	/**
-	 * Renders the view object to a string. Global and local data are merged
-	 * and extracted to create local variables within the view file.
+	 * Passes [ViewModel] to [Template::render()] and returns
+	 * a final string.
 	 *
-	 *     $output = $view->render();
-	 *
-	 * @param    Template
-	 * @param    ViewModel
+	 * @param    mixed   Can be Template or string path to template
 	 * @return   string
 	 */
-	public function render(Template $template = NULL, ViewModel $view_model = NULL)
+	public function render($template = NULL)
 	{
-		if ($template)
+		if ($template instanceOf Template)
 		{
-			$this->set_template($template);
+			$this->template($template);
+		}
+		else if (is_string($template))
+		{
+			$this->set_filename($template);
 		}
 		
-		if ($view_model)
-		{
-			$this->set_model($view_model);
-		}
-		
-		return $this->get_template()
-			->render($this->get_model());
+		return (string) $this->template()->render($this->viewmodel());
 	}
 
 }
