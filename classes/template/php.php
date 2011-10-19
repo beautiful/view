@@ -26,7 +26,7 @@ class Template_PHP extends Template {
 	 *
 	 * @access  protected
 	 */
-	protected $_dir = 'templates';
+	protected $_dir = 'views';
 
 	/**
 	 * Captures the output that is generated when a view is included.
