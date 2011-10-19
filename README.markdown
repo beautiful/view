@@ -39,17 +39,17 @@ class Controller_Page extends Controller {
 
 	public function action_view()
 	{
-		$stub = $this->request->param('stub');
-		$model = Model::factory('Page', array('stub' => $stub));
+		$slug = $this->request->param('slug');
+		$model = Model::factory('Page', array('slug' => $slug));
 		$view = View::factory('page', array(
 			'title'      => $model->title,
 			'navigation' => array(
 				array(
-					'url'   => Route::url('page', array('stub' => 'home')),
+					'url'   => Route::url('page', array('slug' => 'home')),
 					'label' => 'Home',
 				),
 				array(
-					'url'   => Route::url('page', array('stub' => 'about')),
+					'url'   => Route::url('page', array('slug' => 'about')),
 					'label' => 'About',
 				),
 			),
@@ -121,19 +121,19 @@ application today without any module! Take this example:
 <?php
 class View_Page {
 
-	protected $_stub;
+	protected $_slug;
 	protected $_page;
 
-	public function __construct($stub)
+	public function __construct($slug)
 	{
-		$this->_stub = $stub;
+		$this->_slug = $slug;
 	}
 	
 	protected function page()
 	{
 		if ($this->_page === NULL)
 		{
-			$this->_page = Model::factory('Page', array('stub' => $this->_stub));
+			$this->_page = Model::factory('Page', array('slug' => $this->_slug));
 		}
 		
 		return $this->_page;
@@ -148,11 +148,11 @@ class View_Page {
 	{
 		return array(
 			array(
-				'url'   => Route::url('page', array('stub' => 'home')),
+				'url'   => Route::url('page', array('slug' => 'home')),
 				'label' => 'Home',
 			),
 			array(
-				'url'   => Route::url('page', array('stub' => 'about')),
+				'url'   => Route::url('page', array('slug' => 'about')),
 				'label' => 'About',
 			),
 		);
@@ -204,8 +204,8 @@ class Controller_Page extends Controller {
 
 	public function action_view()
 	{
-		$stub = $this->request->param('stub');
-		$view = View::factory('page', array('view' => new View_Page($stub)));
+		$slug = $this->request->param('slug');
+		$view = View::factory('page', array('view' => new View_Page($slug)));
 		$this->response->body($view);
 	}
 
@@ -245,8 +245,8 @@ class Controller_Page extends Controller {
 
 	public function action_view()
 	{
-		$stub = $this->request->param('stub');
-		$view = View::factory('page', new View_Page($stub));
+		$slug = $this->request->param('slug');
+		$view = View::factory('page', new View_Page($slug));
 		$this->response->body($view);
 	}
 }
@@ -309,7 +309,7 @@ class Controller_Page extends Controller {
 
 	public function action_view()
 	{
-		$stub = $this->request->param('stub');
+		$slug = $this->request->param('slug');
 		$template = 'page';
 		
 		if ($this->request->is_ajax())
@@ -317,7 +317,7 @@ class Controller_Page extends Controller {
 			$template = new Template_JSON($template);
 		}
 		
-		$view = View::factory($template, new View_Page($stub));
+		$view = View::factory($template, new View_Page($slug));
 		$this->response->body($view);
 	}
 	
