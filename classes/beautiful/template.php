@@ -45,7 +45,7 @@ abstract class Beautiful_Template {
 	 */
 	public function __construct($path = NULL)
 	{
-		if ($path !== $path)
+		if ($path !== NULL)
 		{
 			$this->path($path);
 		}
