@@ -10,8 +10,8 @@ knowledge by placing it in `ViewModel`s.
  - Works with Kohana 3.2 +
  - Provides various template solutions: PHP, Mustache, JSON.
  - Gives you ViewModel from MVVM
- - [Download](http://google.com)
- - [Example](http://google.com)
+ - [Download](https://github.com/beautiful/view/zipball/master)
+ - [Example](https://github.com/beautiful/example)
  - [Author](http://lukemorton.co.uk)
 
 ## The long explanation
