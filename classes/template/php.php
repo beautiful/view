@@ -9,7 +9,7 @@
  * @copyright   Luke Morton, 2011
  * @license     MIT
  */
-class Template_Default extends Template {
+class Template_PHP extends Template {
 
 	/**
 	 * Default driver works with .php files.
@@ -26,7 +26,7 @@ class Template_Default extends Template {
 	 *
 	 * @access  protected
 	 */
-	protected $_dir = 'views';
+	protected $_dir = 'templates';
 
 	/**
 	 * Captures the output that is generated when a view is included.
