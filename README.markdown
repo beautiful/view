@@ -390,7 +390,117 @@ listed for clarity:
  - `View::render()` can now accept a `Template` object as
    well as a string path.
    
-## My idea for `Template_JSON`
+## Templating
+
+### Template_PHP
+
+The default templating for Beautiful View, it runs in the
+same vein as Kohana_View's template rendering.
+
+If you pass `Beautiful_View` an array of data then this will
+be placed into a vanilla `ViewModel`. You may also use a
+vanilla `ViewModel` directly. Either way when rendering a
+the view data using Template_PHP the `ViewModel`'s
+properties will be exposed as variables like Kohana_View.
+
+Using any other object that extends `ViewModel` the only
+variable exposed to the view is the `ViewModel` inside the
+`$view` variable.
+
+What follows is an example that hopefully spells out the
+difference between passing in a class that extends
+`ViewModel` and passing in an array.
+
+#### example/viewmodel.php
+```php
+<h1><?= $view->title() ?></h1>
+```
+
+#### example/array.php
+```php
+<h1><?= $title ?></h1>
+```
+
+```php
+<?php
+class View_Example extends ViewModel {
+
+	public function title()
+	{
+		return 'View_Example Title';
+	}
+
+}
+
+echo new View(
+		new Template_PHP('example/viewmodel'),
+		new View_Example);
+	
+echo new View(
+		new Template_PHP('example/array'),
+		array('title' => 'Array Title'));
+```
+
+So you see, the templates do differ! **This is your warning.**
+The reason for this is to maintain backwards compatability
+with the old View API whilst your new templates can benefit
+from accessing the object with `$view`.
+
+As with `Kohana_View` your PHP templates need to be placed
+in the `views` folder. You can extend `Template_PHP`
+yourself and overwrite the `::$_dir` property to change
+this to the more sensible `templates` folder.
+
+### Template_Mustache
+
+For rendering your mustaches of course :{) It works in a
+similar way to that of zombor's Kostache. In fact if you
+understand how Mustache.php works you will find that
+`Template_Mustache` is a very simple wrapper.
+
+Mustache templates should be placed in the `templates`
+directory.
+
+#### Differences with Kostache
+
+It's easier for those of you who use Kostache to just let
+you know the differences:
+
+ - You cannot set partials on the ViewModel.
+ - The template path is set when you initialise
+   `Template_Mustache` and does not reference the name of
+   your `ViewModel`.
+ - You cannot set the template path from your `ViewModel`.
+ - There is no equivelent to `Kostache_Layout` currently.
+
+So why differentiate? Beautiful_View is about the complete
+separation of a template from a ViewModel. They should not
+really have any idea about each other. This means that
+either piece can be interchanged, this flexibility is
+awesome especially when flipping between `Template_PHP` and
+`Template_JSON`.
+
+Partials have to be set directly to the template using
+`Template_Mustache::partial()`. This is because partials
+are specific to a template not a `ViewModel`.
+
+I believe this separation is key although I think that I
+will need to come up to some `Kostache_Layout` equivelent.
+Perhaps something like:
+
+```php
+<?php
+$template = new Template_Mustache(
+	'post',
+	array('layout' => 'shared/layout'));
+echo new View($template, new View_Post);
+```
+
+Whereby the second param of `Template_Mustache` can be an
+array of options. This way partials could be set via the
+constructor too. Let me know what you think.
+
+### Template_JSON
 
 As modern web application developers we tend to use a lot
 of JSON as a means for communicating via XHR. I really want
