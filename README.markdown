@@ -10,6 +10,7 @@ knowledge by placing it in `ViewModel`s.
  - Works with Kohana 3.2 +
  - Provides various template solutions: PHP, Mustache, JSON.
  - Gives you ViewModel from MVVM
+ - Tested, checkout the [test](https://github.com/beautiful/view/tree/test) branch.
  - [Download](https://github.com/beautiful/view/zipball/master)
  - [Example](https://github.com/beautiful/example) (Currently out of date)
  - [Author](http://lukemorton.co.uk)
@@ -29,7 +30,6 @@ currently provided by `Kohana_View`.
 [1]: https://github.com/zombor/KOstache
 
 ### Currently in Kohana_View
-
 Let's take a simple example of a CMS page Controller using
 the standard Kohana_View class.
 
