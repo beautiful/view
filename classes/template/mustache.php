@@ -66,7 +66,7 @@ class Template_Mustache extends Template {
 			
 			if ($path === FALSE)
 			{
-				throw new Kohana_View_Exception(
+				throw new View_Exception(
 					'The requested partial :path could not be found',
 					array(':path' => "{$this->_dir}/{$path}.{$this->_extension}"));
 			}

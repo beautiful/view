@@ -67,7 +67,7 @@ abstract class Beautiful_Template {
 		
 		if ($final_path === FALSE)
 		{
-			throw new Kohana_View_Exception(
+			throw new View_Exception(
 				'The requested view :path could not be found',
 				array(':path' => "{$this->_dir}/{$path}.{$this->_extension}"));
 		}				

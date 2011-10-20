@@ -63,7 +63,7 @@ class Beautiful_View {
 			}
 			else
 			{
-				throw new Kohana_Exception('Either a string path or Template instance should be passed into Beautiful_View::__construct()');
+				throw new View_Exception('Either a string path or Template instance should be passed into Beautiful_View::__construct()');
 			}
 		}
 		
@@ -79,7 +79,7 @@ class Beautiful_View {
 			}
 			else
 			{
-				throw new Kohana_Exception('Either an array or ViewModel instance should be passed into Beautiful_View::__construct()');
+				throw new View_Exception('Either an array or ViewModel instance should be passed into Beautiful_View::__construct()');
 			}
 		}
 	}
@@ -147,7 +147,7 @@ class Beautiful_View {
 	 */
 	public function & __get($key)
 	{
-		return $this->viewmodel()->get($key);
+		return $this->viewmodel()->{$key};
 	}
 
 	/**
@@ -177,7 +177,7 @@ class Beautiful_View {
 	public function __isset($key)
 	{
 		$model = $this->viewmodel();
-		return isset($model[$key]);
+		return isset($model->{$key});
 	}
 
 	/**
