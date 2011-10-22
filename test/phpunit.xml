@@ -1,0 +1,12 @@
+<phpunit bootstrap="bootstrap.php">
+  <testsuites>
+    <testsuite name="Beautiful_View">
+      <file>ViewTest.php</file>
+      <file>ViewModelTest.php</file>
+      <file>ViewBackCompatTest.php</file>
+      <file>TemplatePHPTest.php</file>
+      <file>TemplateJSONTest.php</file>
+      <file>TemplateMustacheTest.php</file>
+    </testsuite>
+  </testsuites>
+</phpunit>
