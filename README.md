@@ -15,6 +15,21 @@ knowledge by placing it in `ViewModel`s.
  - [Example](https://github.com/beautiful/example)
  - [Wiki](https://github.com/beautiful/view/wiki)
 
+Quick Example
+
+```php
+<?php
+$template = 'example';
+
+if ($this->request->is_ajax())
+{
+	$template = new Template_JSON('example');
+}
+
+$view = new View($template, new View_Example);
+$this->response->body($view);
+```
+
 ## Author & Copyright
 
 [Luke Morton 2011](http://lukemorton.co.uk)
