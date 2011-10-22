@@ -12,7 +12,7 @@ knowledge by placing it in `ViewModel`s.
  - Gives you ViewModel from MVVM
  - Tested, checkout the [test](https://github.com/beautiful/view/tree/test) branch.
  - [Download](https://github.com/beautiful/view/zipball/master)
- - [Example](https://github.com/beautiful/example) (Currently out of date)
+ - [Example](https://github.com/beautiful/example)
  - [Author](http://lukemorton.co.uk)
 
 ## The long explanation
