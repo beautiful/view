@@ -16,8 +16,8 @@ templating with your various `ViewModel`s.
  - Use `ViewModel`s to isolate your view logic
  - Tested using PHPUnit
  - [Download](https://github.com/beautiful/view/zipball/master)
- - [Example](https://github.com/beautiful/example)
- - [Wiki](https://github.com/beautiful/view/wiki)
+ - See some [Examples](https://github.com/beautiful/example)
+ - Read the [Wiki](https://github.com/beautiful/view/wiki) to learn more
 
 ## Quick Example
 
@@ -25,7 +25,7 @@ templating with your various `ViewModel`s.
 <?php
 echo new View('example', array('title' => 'A title'));
 echo new View('example', new View_Example);
-echo new View(new Template_Mustache('example', new View_Example));
+echo new View(new Template_Mustache('example'), new View_Example);
 
 class Controller_Example extends Controller {
 	
