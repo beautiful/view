@@ -4,3 +4,6 @@
 [submodule "guide"]
 	path = guide
 	url = git://github.com/beautiful/view.wiki.git
+[submodule "test/system"]
+	path = test/system
+	url = git://github.com/kohana/core.git
