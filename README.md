@@ -2,14 +2,18 @@
 
 ## tl;dr
 
-Put Kohana views on steroids by using the Beautiful
-View component module. It gives us more separation of logic
-clearing your Controllers and templates of view data
-knowledge by placing it in `ViewModel`s.
+Add some beauty to your application with Beautiful Views.
+Designed as a drop in replacement for Kohana's View class
+it extends the functionality you already know with template
+and view data separation.
+
+Separation is acheived with `ViewModel`s and `Template`s
+allowing you to mix and match PHP, Mustache and JSON
+templating with your various `ViewModel`s.
 
  - Works with Kohana 3.2 +
  - Provides various template solutions: PHP, Mustache, JSON.
- - Gives you ViewModel from MVVM
+ - Use `ViewModel`s to isolate your view logic
  - Tested using PHPUnit
  - [Download](https://github.com/beautiful/view/zipball/master)
  - [Example](https://github.com/beautiful/example)
@@ -19,15 +23,26 @@ knowledge by placing it in `ViewModel`s.
 
 ```php
 <?php
-$template = 'example';
+echo new View('example', array('title' => 'A title'));
+echo new View('example', new View_Example);
+echo new View(new Template_Mustache('example', new View_Example));
 
-if ($this->request->is_ajax())
-{
-	$template = new Template_JSON('example');
+class Controller_Example extends Controller {
+	
+	public function action_index()
+	{
+		$template = 'example';
+
+		if ($this->request->is_ajax())
+		{
+			$template = new Template_JSON('example');
+		}
+
+		$view = new View($template, new View_Example);
+		$this->response->body($view);
+	}
+
 }
-
-$view = new View($template, new View_Example);
-$this->response->body($view);
 ```
 
 ## Author & Copyright
