@@ -39,13 +39,21 @@ class Template_PHP extends Template {
 	 * @param   ViewModel
 	 * @return  string
 	 */
-	protected static function capture($file, ViewModel $view)
+	protected static function capture($kohana_view_filename, ViewModel $kohana_view_data)
 	{
-		if (get_class($view) === 'ViewModel')
+		if (get_class($kohana_view_data) === 'ViewModel')
 		{
 			// This class is plain view model, extract
 			// as an array
-			extract((array) $view, EXTR_SKIP);
+			$kohana_view_data = (array) $kohana_view_data;
+			extract($kohana_view_data, EXTR_SKIP);
+		}
+		else
+		{
+			// We only want the $view variable
+			// in scope of the template
+			$view = $kohana_view_data;
+			unset($kohana_view_data);
 		}
 
 		// Capture the view output
@@ -54,7 +62,7 @@ class Template_PHP extends Template {
 		try
 		{
 			// Load the view within the current scope
-			include $file;
+			include $kohana_view_filename;
 		}
 		catch (Exception $e)
 		{
