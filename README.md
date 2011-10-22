@@ -15,7 +15,7 @@ knowledge by placing it in `ViewModel`s.
  - [Example](https://github.com/beautiful/example)
  - [Wiki](https://github.com/beautiful/view/wiki)
 
-Quick Example
+## Quick Example
 
 ```php
 <?php
