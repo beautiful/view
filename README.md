@@ -38,6 +38,7 @@ only variable exposed via `$view`.
 ### Using Mustache template
 
 ```php
+<?php
 echo new View(new Template_Mustache('example'), new View_Example);
 
 // Or set this in your bootstrap
@@ -50,6 +51,7 @@ echo new View('example', new View_Example);
 ### Controller Example of responding to XHR and HTTP
 
 ```php
+<?php
 class Controller_Example extends Controller {
 	
 	public function action_index()
