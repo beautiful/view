@@ -10,23 +10,17 @@
  * @license     MIT
  */
 class Template_PHP extends Template {
-
-	/**
-	 * Default driver works with .php files.
-	 *
-	 * @var     string
-	 * @access  protected
-	 * @see     Template::$_extension
-	 */
-	protected $_extension = 'php';
 	
 	/**
 	 * Template directory set to views for historic reasons. I prefer to use
 	 * a directory called "templates" as in [Template_Mustache].
-	 *
-	 * @access  protected
 	 */
-	protected $_dir = 'views';
+	public static $dir = 'views';
+
+	/**
+	 * Default driver works with .php files.
+	 */
+	public static $ext = 'php';
 
 	/**
 	 * Captures the output that is generated when a view is included.

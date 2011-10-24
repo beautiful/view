@@ -15,23 +15,19 @@ abstract class Beautiful_Template {
 	 * Default Template class.
 	 */
 	public static $default_class = 'Template_PHP';
-
-	/**
-	 * Template extension
-	 *
-	 * @protected
-	 */
-	protected $_extension = NULL;
 	
 	/**
-	 * Template directory
-	 *
-	 * @protected
+	 * Template directory.
 	 */
-	protected $_dir = 'templates';
+	public static $dir = 'templates';
 
 	/**
-	 * Template file path
+	 * Template extension.
+	 */
+	public static $ext = NULL;
+
+	/**
+	 * Template file path.
 	 *
 	 * @protected
 	 */
@@ -63,13 +59,13 @@ abstract class Beautiful_Template {
 			return $this->_path;
 		}
 
-		$final_path = Kohana::find_file($this->_dir, $path, $this->_extension);
+		$final_path = Kohana::find_file(static::$dir, $path, static::$ext);
 		
 		if ($final_path === FALSE)
 		{
 			throw new View_Exception(
 				'The requested view :path could not be found',
-				array(':path' => "{$this->_dir}/{$path}.{$this->_extension}"));
+				array(':path' => static::$dir.'/'.$path.'.'.static::$ext));
 		}				
 		
 		$this->_path = $final_path;

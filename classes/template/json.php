@@ -10,22 +10,16 @@
  * @license     MIT
  */
 class Template_JSON extends Template {
+	
+	/**
+	 * Template directory.
+	 */
+	public static $dir = 'templates/json';
 
 	/**
 	 * Template_JSON works with .json files
-	 *
-	 * @var     string
-	 * @access  protected
-	 * @see     Template::$_extension
 	 */
-	protected $_extension = 'json';
-	
-	/**
-	 * Template directory
-	 *
-	 * @access  protected
-	 */
-	protected $_dir = 'templates/json';
+	public static $ext = 'json';
 
 	/**
 	 * The rendering method, wooo!
