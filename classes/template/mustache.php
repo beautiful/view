@@ -50,7 +50,7 @@ class Template_Mustache extends Template {
 	 */
 	public function partial($name, $path)
 	{
-		if ( ! $path)
+		if ($path === FALSE)
 		{
 			unset($this->_partials[$name]);
 		}
