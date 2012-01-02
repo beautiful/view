@@ -247,7 +247,7 @@ class Beautiful_View {
 	 */
 	public function set($key, $value = NULL)
 	{
-		$this->viewmodel()->bind($key, $value);
+		$this->viewmodel()->set($key, $value);
 		return $this;
 	}
 
