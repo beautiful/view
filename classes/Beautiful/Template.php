@@ -10,12 +10,12 @@
  * @license     MIT
  */
 abstract class Beautiful_Template {
-	
+
 	/**
 	 * Default Template class.
 	 */
 	public static $default_class = 'Template_PHP';
-	
+
 	/**
 	 * Template directory.
 	 */
@@ -32,21 +32,29 @@ abstract class Beautiful_Template {
 	 * @protected
 	 */
 	protected $_path = NULL;
-	
+
 	/**
 	 * Create new instance.
 	 *
 	 * @param   string  Filename
 	 * @return  void
 	 */
-	public function __construct($path = NULL)
+	public function __construct($path = NULL, $partials = NULL)
 	{
 		if ($path !== NULL)
 		{
 			$this->path($path);
 		}
+
+		if (is_array($partials) AND method_exists($this, 'partial'))
+		{
+			foreach($partials as $name => $path)
+			{
+				$this->partial($name, $path);
+			}
+		}
 	}
-	
+
 	/**
 	 * Get/Set path to template file.
 	 *
@@ -60,14 +68,14 @@ abstract class Beautiful_Template {
 		}
 
 		$final_path = Kohana::find_file(static::$dir, $path, static::$ext);
-		
+
 		if ($final_path === FALSE)
 		{
 			throw new View_Exception(
 				'The requested view :path could not be found',
 				array(':path' => static::$dir.'/'.$path.'.'.static::$ext));
-		}				
-		
+		}
+
 		$this->_path = $final_path;
 		return $this;
 	}
